@@ -1,0 +1,13 @@
+* {
+    background-color: lightblue;
+}
+
+img {
+    height: 500px;
+    width: 500px;
+}
+
+div {
+    color: white;
+    background-color: darkblue;
+}
