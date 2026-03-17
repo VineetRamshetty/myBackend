@@ -1,3 +1,4 @@
+const ExpressError=require("./expressError")
 const express=require("express");
 const app=express();
 
@@ -30,7 +31,7 @@ const checkToken=(req, res, next)=>{
     if(token==="giveaccess"){
         return next();
     }
-    res.send("ACCESS DENIED!");
+    throw new ExpressError(401, "ACCESS DENIED!");
 };
 
 app.get("/api", checkToken, (req, res)=>{
@@ -43,6 +44,20 @@ app.get("/", (req, res)=>{
 
 app.get("/random", (req, res)=>{
     res.send("i am random");
+});
+
+app.get("/err", (req, res)=>{
+    abcd=abcd;
+});
+
+app.get("/admin", (req, res)=>{
+    throw new ExpressError(403, "Access to admin is Forbidden");
+});
+
+app.use((err, req, res, next)=>{
+    console.log("---ERROR---");
+    let {status=500, message="Some Error Occured"}=err;
+    res.status(status).send(message);
 });
 
 app.use((req, res)=>{
